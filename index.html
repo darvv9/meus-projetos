@@ -1,11 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Darv | SaaS Founder Dashboard</title>
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --card-bg: #151a24;
+            --accent: #61ffca;
+            --text-main: #edecee;
+            --text-dim: #9ea3b0;
+            --border: rgba(97, 255, 202, 0.1);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dashboard {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -1px;
+        }
+
+        .status-badge {
+            background: rgba(97, 255, 202, 0.1);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border: 1px solid var(--border);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover { border-color: var(--accent); }
+
+        .stat-label { color: var(--text-dim); font-size: 0.8rem; margin-bottom: 5px; }
+        .stat-value { font-size: 1.5rem; font-weight: bold; }
+        .stat-change { color: var(--accent); font-size: 0.8rem; margin-top: 5px; }
+
+        /* Main Content Area */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .chart-box, .activity-box {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .box-title { font-size: 1rem; margin-bottom: 20px; font-weight: 600; }
+
+        /* Simulação de Gráfico */
+        .bar-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            height: 150px;
+        }
+        .bar {
+            background: var(--accent);
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            transition: 0.5s ease;
+            opacity: 0.7;
+        }
+        .bar:hover { opacity: 1; }
+
+        /* Lista de Atividades */
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+
+        button {
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Primeiro código no Vaio!</h1>  
+
+    <div class="dashboard">
+        <header>
+            <div class="logo">DARV_COMMAND_CENTER</div>
+            <div class="status-badge">● LIVE SYSTEM</div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Active Users</div>
+                <div class="stat-value">1,284</div>
+                <div class="stat-change">+12% this week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Monthly Revenue</div>
+                <div class="stat-value">$14,500</div>
+                <div class="stat-change">Scale phase</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Server Load</div>
+                <div class="stat-value">24%</div>
+                <div class="stat-change">Optimized</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="chart-box">
+                <div class="box-title">Growth Analytics</div>
+                <div class="bar-container">
+                    <div class="bar" style="height: 40%;"></div>
+                    <div class="bar" style="height: 60%;"></div>
+                    <div class="bar" style="height: 50%;"></div>
+                    <div class="bar" style="height: 90%;"></div>
+                    <div class="bar" style="height: 75%;"></div>
+                    <div class="bar" style="height: 100%;"></div>
+                </div>
+                <button id="updateData">Update Real-time Data</button>
+            </div>
+
+            <div class="activity-box">
+                <div class="box-title">Recent Events</div>
+                <div class="activity-item"><div class="dot"></div> New user from Miami</div>
+                <div class="activity-item"><div class="dot"></div> Payment processed</div>
+                <div class="activity-item"><div class="dot"></div> Server backup done</div>
+                <div class="activity-item"><div class="dot"></div> New deploy on GitHub</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('updateData');
+const bars = document.querySelectorAll('.bar');
+
+// Função para gerar uma cor aleatória brilhante (estilo Neon)
+function getRandomColor() {
+    const colors = ['#61ffca', '#ff61ef', '#6193ff', '#ffb861', '#ff5555'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+btn.addEventListener('click', () => {
+    bars.forEach(bar => {
+        // Muda a altura (o que você já viu no F12)
+        const newHeight = Math.floor(Math.random() * 100) + 1;
+        bar.style.height = newHeight + '%';
+        
+        // Mágica nova: Muda a cor de fundo e o brilho!
+        const newColor = getRandomColor();
+        bar.style.background = newColor;
+        bar.style.boxShadow = `0 0 15px ${newColor}66`; // Adiciona um brilho da mesma cor
+    });
+    
+    console.log('SaaS Metrics updated with new Styles!');
+});
+    </script>
+
 </body>
 </html>
